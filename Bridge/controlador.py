@@ -1,7 +1,7 @@
 # Aqui se encuentran las funciones que comunican el front end con el back end
 from Bridge.enums import *
 import Bridge.state as state
-import BackEnd.database_comunication as db_com
+import BackEnd.database_communication as db_com
 
 
 # █████ █   █ █████ █████ ████  █   █  ███  █    
