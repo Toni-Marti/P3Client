@@ -8,7 +8,7 @@ import GUI.popups as popups
 ui_MW : Ui_MainWindow
 
 def tryToConnect():
-    ret = con.connectAndFetch(ui_MW.user_input.text(), ui_MW.passwd_input.text())
+    ret = con.connectAndFetch(ui_MW.user_input.text(), ui_MW.password_input.text())
     if ret[0]:
         ui_MW.paginas.setCurrentIndex(1)
     else:
@@ -21,6 +21,7 @@ ui_MW = Ui_MainWindow()
 ui_MW.setupUi(main_win)
 
 ui_MW.paginas.setCurrentIndex(0)
+ui_MW.connect_btn.clicked.connect(tryToConnect)
 
 
 main_win.show()
