@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QMessageBox
 
 def showMessage(message : str, title : str = "Info"):
     msg = QMessageBox()
-    msg.setIcon(QMessageBox.information)
+    msg.setIcon(QMessageBox.Information)
     msg.setText(title)
     msg.setInformativeText(message)
     msg.setWindowTitle(title)

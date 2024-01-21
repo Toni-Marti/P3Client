@@ -85,7 +85,7 @@ p, li { white-space: pre-wrap; }
       <item>
        <widget class="QStackedWidget" name="paginas">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="connection_page">
          <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -166,6 +166,9 @@ p, li { white-space: pre-wrap; }
                   <height>0</height>
                  </size>
                 </property>
+                <property name="echoMode">
+                 <enum>QLineEdit::Password</enum>
+                </property>
                 <property name="placeholderText">
                  <string>contraseña</string>
                 </property>
@@ -225,7 +228,7 @@ p, li { white-space: pre-wrap; }
              <cursorShape>ArrowCursor</cursorShape>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>3</number>
             </property>
             <widget class="QWidget" name="tab_usuario">
              <property name="sizePolicy">

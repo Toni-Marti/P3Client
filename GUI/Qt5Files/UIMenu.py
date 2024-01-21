@@ -64,6 +64,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_8.addWidget(self.label_6)
         self.password_input = QtWidgets.QLineEdit(self.connection_page)
         self.password_input.setMinimumSize(QtCore.QSize(200, 0))
+        self.password_input.setEchoMode(QtWidgets.QLineEdit.Password)
         self.password_input.setObjectName("password_input")
         self.horizontalLayout_8.addWidget(self.password_input)
         self.verticalLayout_2.addLayout(self.horizontalLayout_8)
@@ -411,8 +412,8 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.paginas.setCurrentIndex(1)
-        self.tablas_tabs.setCurrentIndex(0)
+        self.paginas.setCurrentIndex(0)
+        self.tablas_tabs.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
