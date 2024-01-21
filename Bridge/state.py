@@ -12,6 +12,11 @@ valores_solicita_baja : list = []
 valores_antiguas_bajas : list = []
 
 def printState():
+    if not hay_conexion_con_bd:
+        print("No hay conexion con la base de datos")
+    
+    print("Hay conexion con la base de datos")
+    
     if usuario_table_exists:
         print("Tabla Usuario:")
         print(valores_usuario)
