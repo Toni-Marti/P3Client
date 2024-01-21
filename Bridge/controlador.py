@@ -209,7 +209,12 @@ def insertRow(table_type : TableType, fila : list) -> list:
         return [True, [InsertExitCode.SUCCES], "Se ha insertado la fila correctamente."]
         
         
-    
+def transactionDeleteRow(table_type : TableType, clave : str) -> bool:
+    if db_com.transactionDeleteRow(clave):
+        db_com.fetchTable(table_type)
+        return [True,[DeleteExitCode.SUCCES], "Se ha borrado la fila correctamente"]
+    else:
+        return [False,[DeleteExitCode.UNKNOWN], "Error desconocido al borrar la fila"]
 
 def commit() -> bool:
     upadteConnectionState()
