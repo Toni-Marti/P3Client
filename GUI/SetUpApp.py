@@ -38,7 +38,6 @@ def insertRow(tipo : enum.TableType):
     
 
     ret=con.transactionInsertRow(tipo, args)
-    print(ret)
     if ret[0]:
         ui_MW.dibujaTabla(tipo)
     else:

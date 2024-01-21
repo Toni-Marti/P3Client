@@ -61,7 +61,6 @@ def _insertRowCustomMethod(table_type : TableType, fila : list, db_insert_method
             return [False, [InsertExitCode.INCORRECT_FORMAT], "Número de teléfono con letras"]
     
         if correougr[-7:]!="@ugr.es" and correougr[-14:]!="@correo.ugr.es":
-            #print(correougr[-6:])
             return [False, [InsertExitCode.INCORRECT_FORMAT], "Correo UGR inválido"]
     
 
