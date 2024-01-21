@@ -41,38 +41,31 @@ def insertRow(tipo : enum.TableType):
     if ret[0]:
         ui_MW.dibujaTabla(tipo)
     else:
-        popups.showError(ret[2])
+        if ret[1] == Enum.InsertExitCode.NO_CONECTION:
+            showDisconnect()
+        else:
+            popups.showError(ret[2])
 
 def exitApplication():
     app.exit()
 
 def deleteRow(tipo : enum.TableType):
+    clave=[]
     if tipo==enum.TableType.USUARIO:
         clave=[state.valores_usuario[ui_MW.usu_fil_in][0]]
-        ret=con.transactionDeleteRow(tipo,clave)
-        if ret[0]:
-            ui_MW.dibujaTabla(tipo)
-        else:
-            popups.showError(ret[2])
     elif tipo==enum.TableType.BAJA:
         clave=[state.valores_baja[ui_MW.baja_fil_in][0]]
-        ret=con.transactionDeleteRow(tipo,clave)
-        if ret[0]:
-            ui_MW.dibujaTabla(tipo)
-        else:
-            popups.showError(ret[2])
     elif tipo==enum.TableType.SOLICITA_BAJA:
         clave=[state.valores_solicita_baja[ui_MW.baja_fil_in][0]]
-        ret=con.transactionDeleteRow(tipo, clave)
-        if ret[0]:
-            ui_MW.dibujaTabla(tipo)
-        else:
-            popups.showError(ret[2])
     elif tipo==enum.TableType.ANTIGUAS_BAJAS:
         clave=[state.valores_antiguas_bajas[ui_MW.baja_fil_in][0]]
-        ret=con.transactionDeleteRow(tipo, clave)
-        if ret[0]:
-            ui_MW.dibujaTabla(tipo)
+    
+    ret=con.transactionDeleteRow(tipo, clave)
+    if ret[0]:
+        ui_MW.dibujaTabla(tipo)
+    else:
+        if ret[1] == Enum.DeleteExitCode.NO_CONECTION:
+            showDisconnect()
         else:
             popups.showError(ret[2])
 
