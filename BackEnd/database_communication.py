@@ -122,7 +122,7 @@ def transactionInsertRow(table_type : TableType, row : list[str]) -> bool:
     else:
         return True
 
-def deleteRow(table_type : TableType, str : clave) -> bool:
+def deleteRow(table_type : TableType, clave : str) -> bool:
     if not isConnected():
         return False
     
@@ -141,7 +141,7 @@ def deleteRow(table_type : TableType, str : clave) -> bool:
     else:
         return True
     
-def transactionDeleteRow(table_type : TableType, str : clave) -> bool:
+def transactionDeleteRow(table_type : TableType, clave : str) -> bool:
     if not isConnected():
         return False
     
