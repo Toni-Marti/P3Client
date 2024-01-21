@@ -225,7 +225,7 @@ p, li { white-space: pre-wrap; }
              <cursorShape>ArrowCursor</cursorShape>
             </property>
             <property name="currentIndex">
-             <number>3</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="tab_usuario">
              <property name="sizePolicy">

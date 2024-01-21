@@ -1,9 +1,17 @@
 from PyQt5.QtWidgets import QMessageBox
 
-def showError(message):
+def showMessage(message : str, title : str = "Info"):
+    msg = QMessageBox()
+    msg.setIcon(QMessageBox.information)
+    msg.setText(title)
+    msg.setInformativeText(message)
+    msg.setWindowTitle(title)
+    msg.exec_()
+
+def showError(message : str, title : str = "Error"):
     msg = QMessageBox()
     msg.setIcon(QMessageBox.Critical)
-    msg.setText("Error")
+    msg.setText(title)
     msg.setInformativeText(message)
-    msg.setWindowTitle("Error")
+    msg.setWindowTitle(title)
     msg.exec_()

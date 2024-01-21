@@ -7,6 +7,6 @@ solicitar_table_exists : bool
 antiguas_table_exists : bool
 
 valores_usuario : list = []
-valores_baja : list = []
+valores_baja : list = [["Diarrea"], ["CockBig"], ["Dierna"]]
 valores_solicita_baja : list = []
 valores_antiguas_bajas : list = []
