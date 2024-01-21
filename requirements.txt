@@ -1,1 +1,1 @@
-pip install cx_oracle PyQt5
+pip install oracledb PyQt5
