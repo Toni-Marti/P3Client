@@ -149,10 +149,10 @@ def insertRow(table_type : TableType, fila : list) -> list:
         if not nombre.isalpha():
             return [False, [InsertExitCode.INCORRECT_FORMAT], "Un nombre solo puede tener letras"]
         
-        if not telefono[-len(telefono)-1:].isdigit():
+        if not telefono[1:].isdigit():
             return [False, [InsertExitCode.INCORRECT_FORMAT], "Número de teléfono con letras"]
     
-        if correougr[-6:]!="@ugr.es" or correougr[-14:]!="@correo.ugr.es":
+        if correougr[-7:]!="@ugr.es" and correougr[-14:]!="@correo.ugr.es":
             return [False, [InsertExitCode.INCORRECT_FORMAT], "Correo UGR inválido"]
     
 

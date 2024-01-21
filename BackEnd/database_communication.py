@@ -90,13 +90,13 @@ def insertRow(table_type : TableType, row : list[str]) -> bool:
     
     try:
         if table_type == TableType.USUARIO:
-            cursor.execute("INSERT INTO " + tab_usuario + " VALUES(" + row[0] + "," + row[1] + "," + row[2] + "," + row[3] + "," + row[4] + "," + row[5] + "," + "to_date('" + row[6] + "', 'dd/mm/yyyy'))")
+            cursor.execute("INSERT INTO " + tab_usuario + " VALUES('" + row[0] + "','" + row[1] + "','" + row[2] + "','" + row[3] + "','" + row[4] + "','" + row[5] + "','" + row[6] + "');")
         elif table_type == TableType.BAJA:
-            cursor.execute("INSERT INTO " + tab_baja + " VALUES(" + row[0] + ")")
+            cursor.execute("INSERT INTO " + tab_baja + " VALUES('" + row[0] + "');")
         elif table_type == TableType.SOLICITA_BAJA:
-            cursor.execute("INSERT INTO " + tab_solbaja + " VALUES(" + row[0] + ", to_date('" + row[1] + "', 'dd/mm/yyyy')" + ", to_date('" + row[2] + "', 'dd/mm/yyyy'), " + row[3] + ")")
+            cursor.execute("INSERT INTO " + tab_solbaja + " VALUES('" + row[0] + "', to_date('" + row[1] + "', 'dd/mm/yyyy')" + ", to_date('" + row[2] + "', 'dd/mm/yyyy'), '" + row[3] + "');")
         elif table_type == TableType.ANTIGUAS_BAJAS:
-            cursor.execute("INSERT INTO " + tab_antiguasbajas + " VALUES(" + row[0] + ", to_date('" + row[1] + "', 'dd/mm/yyyy')" + ", to_date('" + row[2] + "', 'dd/mm/yyyy'), " + row[3] + ")")
+            cursor.execute("INSERT INTO " + tab_antiguasbajas + " VALUES('" + row[0] + "', to_date('" + row[1] + "', 'dd/mm/yyyy')" + ", to_date('" + row[2] + "', 'dd/mm/yyyy'), '" + row[3] + "');")
 
     except:
         return False
@@ -108,15 +108,9 @@ def transactionInsertRow(table_type : TableType, row : list[str]) -> bool:
         return False
     
     try:
-        if table_type == TableType.USUARIO:
-            cursor.execute("BEGIN TRANSACTION; INSERT INTO " + tab_usuario + " VALUES('" + row[0] + "','" + row[1] + "','" + row[2] + "','" + row[3] + "','" + row[4] + "','" + row[5] + "','" + row[6] + "'); COMMIT;")
-        elif table_type == TableType.BAJA:
-            cursor.execute("BEGIN TRANSACTION; INSERT INTO " + tab_baja + " VALUES('" + row[0] + "'); COMMIT;")
-        elif table_type == TableType.SOLICITA_BAJA:
-            cursor.execute("BEGIN TRANSACTION; INSERT INTO " + tab_solbaja + " VALUES('" + row[0] + "', to_date('" + row[1] + "', 'dd/mm/yyyy')" + ", to_date('" + row[2] + "', 'dd/mm/yyyy'), '" + row[3] + "'); COMMIT;")
-        elif table_type == TableType.ANTIGUAS_BAJAS:
-            cursor.execute("BEGIN TRANSACTION; INSERT INTO " + tab_antiguasbajas + " VALUES('" + row[0] + "', to_date('" + row[1] + "', 'dd/mm/yyyy')" + ", to_date('" + row[2] + "', 'dd/mm/yyyy'), '" + row[3] + "'); COMMIT;")
-
+        cursor.execute("BEGIN TRANSACTION;")
+        insertRow(table_type, row)
+        cursor.execute("COMMIT;")
     except:
         return False
     else:
