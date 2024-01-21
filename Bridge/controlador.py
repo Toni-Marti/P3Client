@@ -52,16 +52,17 @@ def transactionInsertRow(table_type : TableType, fila : list) -> list:
         correougr : str = fila[5]
         despacho : str = fila[6]
 
-        if not dni[:8].isdigit() or not dni[9].isalpha():
+        if not dni[:8].isdigit() or not dni[8].isalpha():
             return [False, [InsertExitCode.INCORRECT_FORMAT], "Formato de DNI inválido"]
 
         if not nombre.isalpha():
             return [False, [InsertExitCode.INCORRECT_FORMAT], "Un nombre solo puede tener letras"]
         
-        if not telefono[-len(telefono)-1:].isdigit():
+        if not telefono[1:].isdigit():
             return [False, [InsertExitCode.INCORRECT_FORMAT], "Número de teléfono con letras"]
     
-        if correougr[-6:]!="@ugr.es" or correougr[-14:]!="@correo.ugr.es":
+        if correougr[-7:]!="@ugr.es" and correougr[-14:]!="@correo.ugr.es":
+            #print(correougr[-6:])
             return [False, [InsertExitCode.INCORRECT_FORMAT], "Correo UGR inválido"]
     
 
@@ -86,7 +87,7 @@ def transactionInsertRow(table_type : TableType, fila : list) -> list:
         f_fin : str = fila[2]
         motivo : str = fila[3]
 
-        if not dni[:8].isdigit() or not dni[9].isalpha():
+        if not dni[:8].isdigit() or not dni[8].isalpha():
             return [False, [InsertExitCode.INCORRECT_FORMAT], "Formato de DNI inválido"]
         
         #dd/mm/yyyy
@@ -107,7 +108,7 @@ def transactionInsertRow(table_type : TableType, fila : list) -> list:
         f_fin : str = fila[2]
         motivo : str = fila[3]
 
-        if not dni[:8].isdigit() or not dni[9].isalpha():
+        if not dni[:8].isdigit() or not dni[8].isalpha():
             return [False, [InsertExitCode.INCORRECT_FORMAT], "Formato de DNI inválido"]
 
         #dd/mm/yyyy
@@ -116,9 +117,11 @@ def transactionInsertRow(table_type : TableType, fila : list) -> list:
                 if int(f_ini[6:10])>int(f_fin[6:10]):
                     return [False, [InsertExitCode.INVALID_VALUES], "La fecha inicial es posterior a la fecha final"]
         
-    if db_com.insertRow(table_type, fila):
+    if db_com.transactionInsertRow(table_type, fila):
         db_com.fetchTable(table_type)
         return [True, [InsertExitCode.SUCCES], "Se ha insertado la fila correctamente."]
+    else:
+        return [False, [InsertExitCode.UNKNOWN], "Error desconocido"]
 
 def insertRow(table_type : TableType, fila : list) -> list:
     upadteConnectionState()
@@ -140,7 +143,7 @@ def insertRow(table_type : TableType, fila : list) -> list:
         correougr : str = fila[5]
         despacho : str = fila[6]
 
-        if not dni[:8].isdigit() or not dni[9].isalpha():
+        if not dni[:8].isdigit() or not dni[8].isalpha():
             return [False, [InsertExitCode.INCORRECT_FORMAT], "Formato de DNI inválido"]
 
         if not nombre.isalpha():
@@ -174,7 +177,7 @@ def insertRow(table_type : TableType, fila : list) -> list:
         f_fin : str = fila[2]
         motivo : str = fila[3]
 
-        if not dni[:8].isdigit() or not dni[9].isalpha():
+        if not dni[:8].isdigit() or not dni[8].isalpha():
             return [False, [InsertExitCode.INCORRECT_FORMAT], "Formato de DNI inválido"]
         
         #dd/mm/yyyy
@@ -195,7 +198,7 @@ def insertRow(table_type : TableType, fila : list) -> list:
         f_fin : str = fila[2]
         motivo : str = fila[3]
 
-        if not dni[:8].isdigit() or not dni[9].isalpha():
+        if not dni[:8].isdigit() or not dni[8].isalpha():
             return [False, [InsertExitCode.INCORRECT_FORMAT], "Formato de DNI inválido"]
 
         #dd/mm/yyyy

@@ -26,63 +26,52 @@ def showDisconnect():
     popups.showMessage("Se ha desconectado de la base de datos")
 
 def insertRow(tipo : enum.TableType):
+    args=[]
     if tipo==enum.TableType.USUARIO:
-        args=[ui_MW.usu_DNI_in, ui_MW.usu_nom_in, ui_MW.usu_dir_in, ui_MW.usu_tel_in, ui_MW.usu_corr_in, ui_MW.usu_corr_ugr_in, ui_MW.usu_desp_in]
-        ret=con.transactionInsertRow(args)
-        if ret[0]:
-            ui_MW.dibujaTabla(tipo)
-        else:
-            popups.showError(ret[2])
+        args=[ui_MW.usu_DNI_in.text(), ui_MW.usu_nom_in.text(), ui_MW.usu_dir_in.text(), ui_MW.usu_tel_in.text(), ui_MW.usu_corr_in.text(), ui_MW.usu_corr_ugr_in.text(), ui_MW.usu_desp_in.text()] 
     elif tipo==enum.TableType.BAJA:
-        args=[ui_MW.baja_mot_in]
-        ret=con.transactionInsertRow(args)
-        if ret[0]:
-            ui_MW.dibujaTabla(tipo)
-        else:
-            popups.showError(ret[2])
+        args=[ui_MW.baja_mot_in.text()]
     elif tipo==enum.TableType.SOLICITA_BAJA:
-        args=[ui_MW.sol_DNI_in, ui_MW.sol_ini_in, ui_MW.sol_fin_in, ui_MW.sol_motivo_in]
-        ret=con.transactionInsertRow(args)
-        if ret[0]:
-            ui_MW.dibujaTabla(tipo)
-        else:
-            popups.showError(ret[2])
+        args=[ui_MW.sol_DNI_in.text(), ui_MW.sol_ini_in.text(), ui_MW.sol_fin_in.text(), ui_MW.sol_motivo_in.text()]
     elif tipo==enum.TableType.ANTIGUAS_BAJAS:
-        args=[ui_MW.hist_DNI_in, ui_MW.hist_ini_in, ui_MW.hist_fin_in, ui_MW.hist_motivo_in]
-        ret=con.transactionInsertRow(args)
-        if ret[0]:
-            ui_MW.dibujaTabla(tipo)
-        else:
-            popups.showError(ret[2])
+        args=[ui_MW.hist_DNI_in.text(), ui_MW.hist_ini_in.text(), ui_MW.hist_fin_in.text(), ui_MW.hist_motivo_in.text()]
+    
+
+    ret=con.transactionInsertRow(tipo, args)
+    print(ret)
+    if ret[0]:
+        ui_MW.dibujaTabla(tipo)
+    else:
+        popups.showError(ret[2])
 
 def exitApplication():
     app.exit()
 
 def deleteRow(tipo : enum.TableType):
     if tipo==enum.TableType.USUARIO:
-        clave=state.valores_usuario[ui_MW.usu_fil_in][0]
-        ret=con.transactionDeleteRow(clave)
+        clave=[state.valores_usuario[ui_MW.usu_fil_in][0]]
+        ret=con.transactionDeleteRow(tipo,clave)
         if ret[0]:
             ui_MW.dibujaTabla(tipo)
         else:
             popups.showError(ret[2])
     elif tipo==enum.TableType.BAJA:
-        clave=state.valores_baja[ui_MW.baja_fil_in][0]
-        ret=con.transactionDeleteRow(clave)
+        clave=[state.valores_baja[ui_MW.baja_fil_in][0]]
+        ret=con.transactionDeleteRow(tipo,clave)
         if ret[0]:
             ui_MW.dibujaTabla(tipo)
         else:
             popups.showError(ret[2])
     elif tipo==enum.TableType.SOLICITA_BAJA:
-        clave=state.valores_solicita_baja[ui_MW.baja_fil_in][0]
-        ret=con.transactionDeleteRow(clave)
+        clave=[state.valores_solicita_baja[ui_MW.baja_fil_in][0]]
+        ret=con.transactionDeleteRow(tipo, clave)
         if ret[0]:
             ui_MW.dibujaTabla(tipo)
         else:
             popups.showError(ret[2])
     elif tipo==enum.TableType.ANTIGUAS_BAJAS:
-        clave=state.valores_antiguas_bajas[ui_MW.baja_fil_in][0]
-        ret=con.transactionDeleteRow(clave)
+        clave=[state.valores_antiguas_bajas[ui_MW.baja_fil_in][0]]
+        ret=con.transactionDeleteRow(tipo, clave)
         if ret[0]:
             ui_MW.dibujaTabla(tipo)
         else:
