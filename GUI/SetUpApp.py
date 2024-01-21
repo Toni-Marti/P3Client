@@ -1,23 +1,26 @@
 import sys
 from GUI.Qt5Files.UIMenu import * 
-from PyQt5.QtWidgets import QMainWindow, QApplication
+from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
 import Bridge.controlador as con
 import Bridge.state as state
+import GUI.popups as popups
 
-ui_main_win : Ui_MainWindow
+ui_MW : Ui_MainWindow
 
 def tryToConnect():
-    ret = con.connectAndFetch(ui)
+    ret = con.connectAndFetch(ui_MW.user_input.text(), ui_MW.passwd_input.text())
     if ret[0]:
-        ui_main_win.paginas.setCurrentIndex(1)
+        ui_MW.paginas.setCurrentIndex(1)
+    else:
+        popups.showError(ret[2])
 
 app = QApplication(sys.argv)
 main_win = QMainWindow()
 
-ui_main_win = Ui_MainWindow()
-ui_main_win.setupUi(main_win)
+ui_MW = Ui_MainWindow()
+ui_MW.setupUi(main_win)
 
-ui_main_win.paginas.setCurrentIndex(0)
+ui_MW.paginas.setCurrentIndex(0)
 
 
 main_win.show()
