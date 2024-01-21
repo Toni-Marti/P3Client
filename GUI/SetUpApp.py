@@ -3,6 +3,7 @@ from GUI.Qt5Files.UIMenu import *
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
 import Bridge.controlador as con
 import Bridge.state as state
+import Bridge.enums as enum
 import GUI.popups as popups
 
 ui_MW : Ui_MainWindow
@@ -14,6 +15,66 @@ def tryToConnect():
     else:
         popups.showError(ret[2])
 
+def insertRow(tipo : enum.TableType):
+    if tipo==enum.TableType.USUARIO:
+        args=[ui_MW.usu_DNI_in, ui_MW.usu_nom_in, ui_MW.usu_dir_in, ui_MW.usu_tel_in, ui_MW.usu_corr_in, ui_MW.usu_corr_ugr_in, ui_MW.usu_desp_in]
+        ret=con.transactionInsertRow(args)
+        if ret[0]:
+            ui_MW.dibujaTabla(tipo)
+        else:
+            popups.showError(ret[2])
+    elif tipo==enum.TableType.BAJA:
+        args=[ui_MW.baja_mot_in]
+        ret=con.transactionInsertRow(args)
+        if ret[0]:
+            ui_MW.dibujaTabla(tipo)
+        else:
+            popups.showError(ret[2])
+    elif tipo==enum.TableType.SOLICITA_BAJA:
+        args=[ui_MW.sol_DNI_in, ui_MW.sol_ini_in, ui_MW.sol_fin_in, ui_MW.sol_motivo_in]
+        ret=con.transactionInsertRow(args)
+        if ret[0]:
+            ui_MW.dibujaTabla(tipo)
+        else:
+            popups.showError(ret[2])
+    elif tipo==enum.TableType.ANTIGUAS_BAJAS:
+        args=[ui_MW.hist_DNI_in, ui_MW.hist_ini_in, ui_MW.hist_fin_in, ui_MW.hist_motivo_in]
+        ret=con.transactionInsertRow(args)
+        if ret[0]:
+            ui_MW.dibujaTabla(tipo)
+        else:
+            popups.showError(ret[2])
+
+def deleteRow(tipo : enum.TableType):
+    if tipo==enum.TableType.USUARIO:
+        clave=state.valores_usuario[ui_MW.usu_fil_in][0]
+        ret=con.transactionDeleteRow(clave)
+        if ret[0]:
+            ui_MW.dibujaTabla(tipo)
+        else:
+            popups.showError(ret[2])
+    elif tipo==enum.TableType.BAJA:
+        clave=state.valores_baja[ui_MW.baja_fil_in][0]
+        ret=con.transactionDeleteRow(clave)
+        if ret[0]:
+            ui_MW.dibujaTabla(tipo)
+        else:
+            popups.showError(ret[2])
+    elif tipo==enum.TableType.SOLICITA_BAJA:
+        clave=state.valores_solicita_baja[ui_MW.baja_fil_in][0]
+        ret=con.transactionDeleteRow(clave)
+        if ret[0]:
+            ui_MW.dibujaTabla(tipo)
+        else:
+            popups.showError(ret[2])
+    elif tipo==enum.TableType.ANTIGUAS_BAJAS:
+        clave=state.valores_antiguas_bajas[ui_MW.baja_fil_in][0]
+        ret=con.transactionDeleteRow(clave)
+        if ret[0]:
+            ui_MW.dibujaTabla(tipo)
+        else:
+            popups.showError(ret[2])
+
 app = QApplication(sys.argv)
 main_win = QMainWindow()
 
@@ -22,6 +83,14 @@ ui_MW.setupUi(main_win)
 
 ui_MW.paginas.setCurrentIndex(0)
 ui_MW.connect_btn.clicked.connect(tryToConnect)
+ui_MW.usu_add_btn.clicked.connect(lambda:insertRow(tipo=enum.TableType.USUARIO))
+ui_MW.usu_elim_btn.clicked.connect(lambda:deleteRow(tipo=enum.TableType.USUARIO))
+ui_MW.baja_add_btn.clicked.connect(lambda:insertRow(tipo=enum.TableType.BAJA))
+ui_MW.baja_elim_btn.clicked.connect(lambda:deleteRow(tipo=enum.TableType.BAJA))
+ui_MW.sol_add_btn.clicked.connect(lambda:insertRow(tipo=enum.TableType.SOLICITA_BAJA))
+ui_MW.sol_elim_btn.clicked.connect(lambda:deleteRow(tipo=enum.TableType.SOLICITA_BAJA))
+ui_MW.hist_add_btn.clicked.connect(lambda:insertRow(tipo=enum.TableType.ANTIGUAS_BAJAS))
+ui_MW.hist_elim_btn.clicked.connect(lambda:deleteRow(tipo=enum.TableType.ANTIGUAS_BAJAS))
 
 
 main_win.show()
