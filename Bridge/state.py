@@ -10,3 +10,36 @@ valores_usuario : list = []
 valores_baja : list = []
 valores_solicita_baja : list = []
 valores_antiguas_bajas : list = []
+
+def printState():
+    if usuario_table_exists:
+        print("Tabla Usuario:")
+        print(valores_usuario)
+    else:
+        print("Tabla Usuario:")
+        print("No existe")
+    print()
+    
+    if baja_table_exists:
+        print("Tabla Baja:")
+        print(valores_baja)
+    else:
+        print("Tabla Baja:")
+        print("No existe")
+    print()
+    
+    if solicitar_table_exists:
+        print("Tabla Solicita Baja:")
+        print(valores_solicita_baja)
+    else:
+        print("Tabla Solicita Baja:")
+        print("No existe")
+    print()
+
+    if antiguas_table_exists:
+        print("Tabla Antiguas Bajas:")
+        print(valores_antiguas_bajas)
+    else:
+        print("Tabla Antiguas Bajas:")
+        print("No existe")
+    print()
