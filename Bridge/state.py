@@ -23,8 +23,8 @@ def printState():
         print()
         return
     
-    print()
     print("Hay conexion con la base de datos")
+    print()
     
     if usuario_table_exists:
         print("Tabla Usuario:")
