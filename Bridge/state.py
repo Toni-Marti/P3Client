@@ -1,3 +1,5 @@
+import BackEnd.database_communication as db_com
+
 # Aqui se almacena la informacion que define el estado de la apliacion
 hay_conexion_con_bd : bool = False
 
@@ -12,9 +14,16 @@ valores_solicita_baja : list = []
 valores_antiguas_bajas : list = []
 
 def printState():
+    print("===== PRINTING STATE =====")
+    
+    db_com.fetchAll()
+    
     if not hay_conexion_con_bd:
         print("No hay conexion con la base de datos")
+        print()
+        return
     
+    print()
     print("Hay conexion con la base de datos")
     
     if usuario_table_exists:
