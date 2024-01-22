@@ -100,6 +100,7 @@ def _insertRowCustomMethod(table_type : TableType, fila : list, db_insert_method
                 if int(f_ini[6:10])>int(f_fin[6:10]):
                     return [False, [InsertExitCode.INVALID_VALUES], "La fecha inicial es posterior a la fecha final"]
         
+    
     if db_insert_method(table_type, fila):
         db_com.fetchTable(table_type)
         return [True, [InsertExitCode.SUCCES], "Se ha insertado la fila correctamente."]
