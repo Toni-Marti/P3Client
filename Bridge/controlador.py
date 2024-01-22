@@ -116,7 +116,7 @@ def transactionInsertRow(table_type : TableType, fila : list) -> list:
 
 def deleteRow(table_type : TableType, clave : str) -> list:
     if db_com.existeAtrib(table_type, clave):
-        return [False,[DeleteExitCode.REFERENCES_NOT_DELETED], "La clave está referenciada en otra tabla"]
+        return [False,[DeleteExitCode.REFERENCES_NOT_DELETED], "Valor referenciado en otra tabla"]
     if db_com.deleteRow(table_type, clave):
         db_com.fetchTable(table_type)
         return [True,[DeleteExitCode.SUCCES], "Se ha borrado la fila correctamente"]
