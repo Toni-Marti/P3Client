@@ -105,7 +105,7 @@ def _insertRowCustomMethod(table_type : TableType, fila : list, db_insert_method
         db_com.fetchTable(table_type)
         return [True, [InsertExitCode.SUCCES], "Se ha insertado la fila correctamente."]
     else:
-        return [False, [InsertExitCode.UNKNOWN], "Error desconocido"]
+        return [False, [InsertExitCode.UNKNOWN], "Error desconocido. Seguramente se incumple alguna restricción de la base de datos o el formato de algun valor es incorrecto."]
     
 
 def transactionInsertRow(table_type : TableType, fila : list) -> list:
