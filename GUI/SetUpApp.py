@@ -19,6 +19,8 @@ def tryToConnect():
         ui_MW.paginas.setCurrentIndex(1)
     else:
         popups.showError(ret[2])
+    
+    state.printState()
 
 def showDisconnect():
     con.disconnect()
@@ -119,6 +121,7 @@ ui_MW.sol_elim_btn.clicked.connect(lambda:deleteRow(tipo=enum.TableType.SOLICITA
 ui_MW.hist_add_btn.clicked.connect(lambda:insertRow(tipo=enum.TableType.ANTIGUAS_BAJAS))
 ui_MW.hist_elim_btn.clicked.connect(lambda:deleteRow(tipo=enum.TableType.ANTIGUAS_BAJAS))
 
+import GUI.add_data
 
 main_win.show()
 app.exec_()
