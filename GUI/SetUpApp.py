@@ -3,7 +3,7 @@ from Bridge.enums import *
 from PyQt5.QtWidgets import QMainWindow, QApplication, QTableWidget, QTableWidgetItem
 import sys
 from GUI.Qt5Files.UIMenu import * 
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QApplication
 import Bridge.controlador as con
 import Bridge.state as state
 import Bridge.enums as enum

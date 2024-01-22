@@ -80,7 +80,7 @@ def _insertRowCustomMethod(table_type : TableType, fila : list, db_insert_method
         elif table_type == TableType.ANTIGUAS_BAJAS:
             exists = state.antiguas_table_exists
         
-        if exists:
+        if not exists:
             return [False, [InsertExitCode.TABLE_DOES_NOT_EXIST], "La tabla SolicitaBaja no existe."]
         
         if len(fila) != 4:
