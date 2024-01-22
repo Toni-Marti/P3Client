@@ -125,22 +125,22 @@ def existeAtrib(table : TableType, clave : str)->bool:
     if table==TableType.USUARIO:
         for fila in fetchTable(TableType.SOLICITA_BAJA):
             if clave==fila[0]:
-                return False
+                return True
 
         for fila in fetchTable(TableType.ANTIGUAS_BAJAS):
             if clave==fila[0]:
-                return False
+                return True
 
     elif table==TableType.BAJA:
         for fila in fetchTable(TableType.SOLICITA_BAJA):
             if clave==fila[3]:
-                return False
+                return True
 
         for fila in fetchTable(TableType.ANTIGUAS_BAJAS):
             if clave==fila[3]:
-                return False
+                return True
     
-    return True
+    return False
 
 #  ████ █████  ███  █████ █████       █   █ ████  ████   ███  █████ █████
 # █       █   █   █   █   █           █   █ █   █ █   █ █   █   █   █    

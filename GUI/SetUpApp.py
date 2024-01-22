@@ -78,6 +78,8 @@ def deleteRow(tipo : enum.TableType):
     ret = con.transactionDeleteRow(tipo, clave)
     if ret[0]:
         dibujaTabla(tipo)
+        if tipo==TableType.SOLICITA_BAJA:
+            dibujaTabla(TableType.ANTIGUAS_BAJAS)
     else:
         if ret[1] == enum.DeleteExitCode.NO_CONECTION:
             showDisconnect()
