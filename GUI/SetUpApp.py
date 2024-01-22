@@ -139,8 +139,6 @@ ui_MW.sol_elim_btn.clicked.connect(lambda:deleteRow(tipo=enum.TableType.SOLICITA
 ui_MW.hist_add_btn.clicked.connect(lambda:insertRow(tipo=enum.TableType.ANTIGUAS_BAJAS))
 ui_MW.hist_elim_btn.clicked.connect(lambda:deleteRow(tipo=enum.TableType.ANTIGUAS_BAJAS))
 
-import GUI.add_data
-
 main_win.show()
 app.exec_()
 con.disconnect()
