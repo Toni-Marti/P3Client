@@ -19,13 +19,12 @@ def tryToConnect():
         ui_MW.paginas.setCurrentIndex(1)
     else:
         popups.showError(ret[2])
-    
-    state.printState()
 
-def showDisconnect():
+def showDisconnect(show_popup : bool = True):
     con.disconnect()
     ui_MW.paginas.setCurrentIndex(0)
-    popups.showMessage("Se ha desconectado de la base de datos")
+    if show_popup:
+        popups.showMessage("Se ha desconectado de la base de datos")
 
 def insertRow(tipo : enum.TableType):
     args=[]
@@ -39,7 +38,7 @@ def insertRow(tipo : enum.TableType):
         args=[ui_MW.hist_DNI_in.text(), ui_MW.hist_ini_in.text(), ui_MW.hist_fin_in.text(), ui_MW.hist_motivo_in.text()]
     
 
-    ret = con.insertRow(tipo, args)
+    ret = con.transactionInsertRow(tipo, args)
     if ret[0]:
         dibujaTabla(tipo)
     else:
@@ -55,18 +54,18 @@ def deleteRow(tipo : enum.TableType):
     clave=[]
     try:
         if tipo==enum.TableType.USUARIO:
-            clave=[state.valores_usuario[int(ui_MW.usu_fil_in)][0]]
+            clave=[state.valores_usuario[int(ui_MW.usu_fil_in.text())-1][0]]
         elif tipo==enum.TableType.BAJA:
-            clave=[state.valores_baja[int(ui_MW.baja_fil_in)][0]]
+            clave=[state.valores_baja[int(ui_MW.baja_fil_in.text())-1][0]]
         elif tipo==enum.TableType.SOLICITA_BAJA:
-            clave=[state.valores_solicita_baja[int(ui_MW.baja_fil_in)][0]]
+            clave=[state.valores_solicita_baja[int(ui_MW.baja_fil_in.text())-1][0]]
         elif tipo==enum.TableType.ANTIGUAS_BAJAS:
-            clave=[state.valores_antiguas_bajas[int(ui_MW.baja_fil_in)][0]]
+            clave=[state.valores_antiguas_bajas[int(ui_MW.baja_fil_in.text())-1][0]]
     except:
         popups.showError("Fila invalida")
         return
     
-    ret=con.transactionDeleteRow(tipo, clave)
+    ret = con.transactionDeleteRow(tipo, clave)
     if ret[0]:
         dibujaTabla(tipo)
     else:
@@ -115,7 +114,7 @@ ui_MW.paginas.setCurrentIndex(0)
 ui_MW.tablas_tabs.setCurrentIndex(0)
 ui_MW.connect_btn.clicked.connect(tryToConnect)
 ui_MW.exit_btn.clicked.connect(exitApplication)
-ui_MW.dissconect_btn.clicked.connect(showDisconnect)
+ui_MW.dissconect_btn.clicked.connect(lambda:showDisconnect(False))
 ui_MW.usu_add_btn.clicked.connect(lambda:insertRow(tipo=enum.TableType.USUARIO))
 ui_MW.usu_elim_btn.clicked.connect(lambda:deleteRow(tipo=enum.TableType.USUARIO))
 ui_MW.baja_add_btn.clicked.connect(lambda:insertRow(tipo=enum.TableType.BAJA))

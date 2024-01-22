@@ -31,7 +31,7 @@ def _getExists(table : TableType) -> bool:
 def upadteConnectionState():
     state.hay_conexion_con_bd = db_com.isConnected()
 
-def _insertRowCustomMethod(table_type : TableType, fila : list, db_insert_method : callable) -> list:
+def insertRow(table_type : TableType, fila : list) -> list:
     upadteConnectionState()
     if not state.hay_conexion_con_bd:
         return [False, [InsertExitCode.NO_CONECTION], "No hay conexion con la base de datos."]
@@ -101,26 +101,30 @@ def _insertRowCustomMethod(table_type : TableType, fila : list, db_insert_method
                     return [False, [InsertExitCode.INVALID_VALUES], "La fecha inicial es posterior a la fecha final"]
         
     
-    if db_insert_method(table_type, fila):
+    if db_com.insertRow(table_type, fila):
         db_com.fetchTable(table_type)
         return [True, [InsertExitCode.SUCCES], "Se ha insertado la fila correctamente."]
     else:
-        return [False, [InsertExitCode.UNKNOWN], "Error desconocido. Seguramente se incumple alguna restricción de la base de datos o el formato de algun valor es incorrecto."]
-    
+        return [False, [InsertExitCode.UNKNOWN], "Error desconocido. Seguramente se incumple alguna restricción de la base de datos o el formato de algun valor es incorrectotransa."]
 
 def transactionInsertRow(table_type : TableType, fila : list) -> list:
-    return _insertRowCustomMethod(table_type, fila, db_com.transactionInsertRow)
+    ret = insertRow(table_type, fila)
+    if ret[0]:
+        db_com.commit()
+    return ret
 
-def insertRow(table_type : TableType, fila : list) -> list:
-    return _insertRowCustomMethod(table_type, fila, db_com.insertRow)
-        
-        
-def transactionDeleteRow(table_type : TableType, clave : str) -> bool:
-    if db_com.transactionDeleteRow(clave):
+def deleteRow(table_type : TableType, clave : str) -> list:
+    if db_com.deleteRow(table_type, clave):
         db_com.fetchTable(table_type)
         return [True,[DeleteExitCode.SUCCES], "Se ha borrado la fila correctamente"]
     else:
-        return [False,[DeleteExitCode.UNKNOWN], "Error desconocido al borrar la fila"]
+        return [False,[DeleteExitCode.UNKNOWN], "Error al borrar la fila"]
+        
+def transactionDeleteRow(table_type : TableType, clave : str) -> bool:
+    ret = deleteRow(table_type, clave)
+    if ret[0]:
+        db_com.commit()
+    return ret
 
 def commit() -> bool:
     upadteConnectionState()
