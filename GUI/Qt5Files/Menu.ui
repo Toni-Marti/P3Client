@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>933</width>
-    <height>736</height>
+    <width>801</width>
+    <height>895</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,22 +20,6 @@
       <property name="leftMargin">
        <number>0</number>
       </property>
-      <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::MinimumExpanding</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>0</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
       <item>
        <widget class="QTextBrowser" name="textBrowser">
         <property name="sizePolicy">
@@ -67,27 +51,23 @@ p, li { white-space: pre-wrap; }
        </widget>
       </item>
       <item>
-       <spacer name="verticalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::MinimumExpanding</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>0</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
        <widget class="QStackedWidget" name="paginas">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="connection_page">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -221,9 +201,27 @@ p, li { white-space: pre-wrap; }
          </layout>
         </widget>
         <widget class="QWidget" name="tablas_page">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <layout class="QVBoxLayout" name="verticalLayout_9">
           <item>
            <widget class="QTabWidget" name="tablas_tabs">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="cursor">
              <cursorShape>ArrowCursor</cursorShape>
             </property>
@@ -232,7 +230,7 @@ p, li { white-space: pre-wrap; }
             </property>
             <widget class="QWidget" name="tab_usuario">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -573,6 +571,12 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="tab_baja">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <attribute name="title">
               <string>Motivos baja</string>
              </attribute>
@@ -696,6 +700,12 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="tab_solicita_baja">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <attribute name="title">
               <string>Solicitudes de baja</string>
              </attribute>
@@ -924,6 +934,12 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
             <widget class="QWidget" name="tab_historial">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <attribute name="title">
               <string>Historial de solicitudes</string>
              </attribute>

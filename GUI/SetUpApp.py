@@ -41,7 +41,7 @@ def insertRow(tipo : enum.TableType):
 
     ret = con.insertRow(tipo, args)
     if ret[0]:
-        ui_MW.dibujaTabla(tipo)
+        dibujaTabla(tipo)
     else:
         if ret[1] == enum.InsertExitCode.NO_CONECTION:
             showDisconnect()
@@ -68,7 +68,7 @@ def deleteRow(tipo : enum.TableType):
     
     ret=con.transactionDeleteRow(tipo, clave)
     if ret[0]:
-        ui_MW.dibujaTabla(tipo)
+        dibujaTabla(tipo)
     else:
         if ret[1] == enum.DeleteExitCode.NO_CONECTION:
             showDisconnect()
