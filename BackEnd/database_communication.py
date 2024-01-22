@@ -123,21 +123,24 @@ def deleteRow(table_type : TableType, clave : list) -> bool:
     
 def existeAtrib(table : TableType, clave : str)->bool:
     if table==TableType.USUARIO:
-        for fila in fetchTable(TableType.SOLICITA_BAJA):
-            if clave==fila[0]:
+        cursor.execute("SELECT * FROM USUARIO")
+        #print(cursor.fetchall())
+        for fila in cursor.fetchall():
+            if clave[0]==fila[0]:
                 return True
 
-        for fila in fetchTable(TableType.ANTIGUAS_BAJAS):
-            if clave==fila[0]:
+        for fila in cursor.fetchall():
+            if clave[0]==fila[0]:
                 return True
 
     elif table==TableType.BAJA:
-        for fila in fetchTable(TableType.SOLICITA_BAJA):
-            if clave==fila[3]:
+        cursor.execute("SELECT * FROM BAJA")
+        for fila in cursor.fetchall():
+            if clave[0]==fila[3]:
                 return True
 
-        for fila in fetchTable(TableType.ANTIGUAS_BAJAS):
-            if clave==fila[3]:
+        for fila in cursor.fetchall():
+            if clave[0]==fila[3]:
                 return True
     
     return False
