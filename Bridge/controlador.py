@@ -72,6 +72,7 @@ def insertRow(table_type : TableType, fila : list) -> list:
             return [False, [InsertExitCode.INCORRECT_NUMBER_OF_FIELDS], "La tabla Baja ha de tener 1 campo."]
         
         motivo : str = fila[0]
+        
 
     elif table_type == TableType.SOLICITA_BAJA or table_type == TableType.ANTIGUAS_BAJAS:
         exists : bool
@@ -85,7 +86,7 @@ def insertRow(table_type : TableType, fila : list) -> list:
         
         if len(fila) != 4:
             return [False, [InsertExitCode.INCORRECT_NUMBER_OF_FIELDS], "La tabla SolcitaBaja ha de tener 4 campos."]
-    
+
         dni : str = fila[0]
         f_ini : str = fila[1]
         f_fin : str = fila[2]
@@ -114,6 +115,8 @@ def transactionInsertRow(table_type : TableType, fila : list) -> list:
     return ret
 
 def deleteRow(table_type : TableType, clave : str) -> list:
+    if db_com.existeAtrib(table_type, clave):
+        return [False,[DeleteExitCode.REFERENCES_NOT_DELETED], "La clave está referenciada en otra tabla"]
     if db_com.deleteRow(table_type, clave):
         db_com.fetchTable(table_type)
         return [True,[DeleteExitCode.SUCCES], "Se ha borrado la fila correctamente"]

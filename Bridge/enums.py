@@ -31,6 +31,7 @@ class DeleteExitCode(Enum):
     NO_CONECTION = 1
     UNKNOWN = 2
     DOES_NOT_EXIST = 3
+    REFERENCES_NOT_DELETED = 4
 
 class InsertExitCode(Enum):
     SUCCES = 0

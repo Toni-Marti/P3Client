@@ -121,7 +121,26 @@ def deleteRow(table_type : TableType, clave : list) -> bool:
         
         return _execute("DELETE FROM " + tabla + " WHERE " + dni + "='" + clave[0] + "' AND " + f_ini + "=to_date('" + clave[1].strftime("%d/%m/%Y") + "', 'dd/mm/yyyy') AND " + f_fin + "=to_date('" + clave[2].strftime("%d/%m/%Y") + "', 'dd/mm/yyyy')")
     
+def existeAtrib(table : TableType, clave : str)->bool:
+    if table==TableType.USUARIO:
+        for fila in fetchTable(TableType.SOLICITA_BAJA):
+            if clave==fila[0]:
+                return False
 
+        for fila in fetchTable(TableType.ANTIGUAS_BAJAS):
+            if clave==fila[0]:
+                return False
+
+    elif table==TableType.BAJA:
+        for fila in fetchTable(TableType.SOLICITA_BAJA):
+            if clave==fila[3]:
+                return False
+
+        for fila in fetchTable(TableType.ANTIGUAS_BAJAS):
+            if clave==fila[3]:
+                return False
+    
+    return True
 
 #  ████ █████  ███  █████ █████       █   █ ████  ████   ███  █████ █████
 # █       █   █   █   █   █           █   █ █   █ █   █ █   █   █   █    
