@@ -76,6 +76,19 @@ def isConnected() -> bool:
     else:
         disconect()
         return False
+
+def _execute(command : str) -> bool:
+    if not isConnected():
+        return
+    
+    try:
+        cursor.execute(command)
+    except:
+        print("Error executing:")
+        print(cursor.statement)
+        return False
+    else:
+        return True
     
 
 # ████   ███  █ █ █  ████
@@ -85,23 +98,14 @@ def isConnected() -> bool:
 # █  █   ███   █ █  ████ 
 
 def insertRow(table_type : TableType, row : list[str]) -> bool:
-    if not isConnected():
-        return False
-    
-    try:
-        if table_type == TableType.USUARIO:
-            cursor.execute("INSERT INTO " + tab_usuario + " VALUES('" + row[0] + "','" + row[1] + "','" + row[2] + "','" + row[3] + "','" + row[4] + "','" + row[5] + "','" + row[6] + "');")
-        elif table_type == TableType.BAJA:
-            cursor.execute("INSERT INTO " + tab_baja + " VALUES('" + row[0] + "');")
-        elif table_type == TableType.SOLICITA_BAJA:
-            cursor.execute("INSERT INTO " + tab_solbaja + " VALUES('" + row[0] + "', to_date('" + row[1] + "', 'dd/mm/yyyy')" + ", to_date('" + row[2] + "', 'dd/mm/yyyy'), '" + row[3] + "');")
-        elif table_type == TableType.ANTIGUAS_BAJAS:
-            cursor.execute("INSERT INTO " + tab_antiguasbajas + " VALUES('" + row[0] + "', to_date('" + row[1] + "', 'dd/mm/yyyy')" + ", to_date('" + row[2] + "', 'dd/mm/yyyy'), '" + row[3] + "');")
-
-    except:
-        return False
-    else:
-        return True
+    if table_type == TableType.USUARIO:
+        return _execute("INSERT INTO " + tab_usuario + " VALUES('" + row[0] + "','" + row[1] + "','" + row[2] + "','" + row[3] + "','" + row[4] + "','" + row[5] + "','" + row[6] + "');")
+    elif table_type == TableType.BAJA:
+        return _execute("INSERT INTO " + tab_baja + " VALUES('" + row[0] + "');")
+    elif table_type == TableType.SOLICITA_BAJA:
+        return _execute("INSERT INTO " + tab_solbaja + " VALUES('" + row[0] + "', to_date('" + row[1] + "', 'dd/mm/yyyy')" + ", to_date('" + row[2] + "', 'dd/mm/yyyy'), '" + row[3] + "');")
+    elif table_type == TableType.ANTIGUAS_BAJAS:
+        return _execute("INSERT INTO " + tab_antiguasbajas + " VALUES('" + row[0] + "', to_date('" + row[1] + "', 'dd/mm/yyyy')" + ", to_date('" + row[2] + "', 'dd/mm/yyyy'), '" + row[3] + "');")
     
 def transactionInsertRow(table_type : TableType, row : list[str]) -> bool:
     if not isConnected():
@@ -109,47 +113,38 @@ def transactionInsertRow(table_type : TableType, row : list[str]) -> bool:
     
     try:
         cursor.execute("BEGIN TRANSACTION;")
-        insertRow(table_type, row)
+        if not insertRow(table_type, row):
+            return False
         cursor.execute("COMMIT;")
     except:
+        print("Error executing:")
+        print(cursor.statement)
         return False
     else:
         return True
 
 def deleteRow(table_type : TableType, clave : str) -> bool:
-    if not isConnected():
-        return False
-    
-    try:
-        if table_type == TableType.USUARIO:
-            cursor.execute("DELETE FROM " + tab_usuario + " WHERE " + dni + "=" + clave)
-        elif table_type == TableType.BAJA:
-            cursor.execute("DELETE FROM " + tab_baja + " WHERE "+ motivo + "=" + clave)
-        elif table_type == TableType.SOLICITA_BAJA:
-            cursor.execute("DELETE FROM " + tab_solbaja + " WHERE " + dni + "=" + clave)
-        elif table_type == TableType.ANTIGUAS_BAJAS:
-            cursor.execute("DELETE FROM " + tab_antiguasbajas + " WHERE " + dni + "=" + clave)
-
-    except:
-        return False
-    else:
-        return True
+    if table_type == TableType.USUARIO:
+        _execute("DELETE FROM " + tab_usuario + " WHERE " + dni + "=" + clave)
+    elif table_type == TableType.BAJA:
+        _execute("DELETE FROM " + tab_baja + " WHERE "+ motivo + "=" + clave)
+    elif table_type == TableType.SOLICITA_BAJA:
+        _execute("DELETE FROM " + tab_solbaja + " WHERE " + dni + "=" + clave)
+    elif table_type == TableType.ANTIGUAS_BAJAS:
+        _execute("DELETE FROM " + tab_antiguasbajas + " WHERE " + dni + "=" + clave)
     
 def transactionDeleteRow(table_type : TableType, clave : str) -> bool:
     if not isConnected():
         return False
     
     try:
-        if table_type == TableType.USUARIO:
-            cursor.execute("BEGIN TRANSACTION; DELETE FROM " + tab_usuario + " WHERE " + dni + "=" + clave + "; COMMIT;")
-        elif table_type == TableType.BAJA:
-            cursor.execute("BEGIN TRANSACTION; DELETE FROM " + tab_baja + " WHERE "+ motivo + "=" + clave + "; COMMIT;")
-        elif table_type == TableType.SOLICITA_BAJA:
-            cursor.execute("BEGIN TRANSACTION; DELETE FROM " + tab_solbaja + " WHERE " + dni + "=" + clave + "; COMMIT;")
-        elif table_type == TableType.ANTIGUAS_BAJAS:
-            cursor.execute("BEGIN TRANSACTION; DELETE FROM " + tab_antiguasbajas + " WHERE " + dni + "=" + clave + "; COMMIT;")
-
+        cursor.execute("BEGIN TRANSACTION;")
+        if not deleteRow(table_type, clave):
+            return False
+        cursor.execute("COMMIT;")
     except:
+        print("Error executing:")
+        print(cursor.statement)
         return False
     else:
         return True
@@ -197,6 +192,8 @@ def fetchTable(table_type : TableType):
     try:
         cursor.execute("SELECT * FROM " + table_name)
     except:
+        print("Error executing:")
+        print(cursor.statement)
         exists = False
     else:
         rows = cursor.fetchall()

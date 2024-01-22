@@ -39,11 +39,11 @@ def insertRow(tipo : enum.TableType):
         args=[ui_MW.hist_DNI_in.text(), ui_MW.hist_ini_in.text(), ui_MW.hist_fin_in.text(), ui_MW.hist_motivo_in.text()]
     
 
-    ret=con.transactionInsertRow(tipo, args)
+    ret = con.insertRow(tipo, args)
     if ret[0]:
         ui_MW.dibujaTabla(tipo)
     else:
-        if ret[1] == Enum.InsertExitCode.NO_CONECTION:
+        if ret[1] == enum.InsertExitCode.NO_CONECTION:
             showDisconnect()
         else:
             popups.showError(ret[2])
@@ -53,20 +53,24 @@ def exitApplication():
 
 def deleteRow(tipo : enum.TableType):
     clave=[]
-    if tipo==enum.TableType.USUARIO:
-        clave=[state.valores_usuario[ui_MW.usu_fil_in][0]]
-    elif tipo==enum.TableType.BAJA:
-        clave=[state.valores_baja[ui_MW.baja_fil_in][0]]
-    elif tipo==enum.TableType.SOLICITA_BAJA:
-        clave=[state.valores_solicita_baja[ui_MW.baja_fil_in][0]]
-    elif tipo==enum.TableType.ANTIGUAS_BAJAS:
-        clave=[state.valores_antiguas_bajas[ui_MW.baja_fil_in][0]]
+    try:
+        if tipo==enum.TableType.USUARIO:
+            clave=[state.valores_usuario[int(ui_MW.usu_fil_in)][0]]
+        elif tipo==enum.TableType.BAJA:
+            clave=[state.valores_baja[int(ui_MW.baja_fil_in)][0]]
+        elif tipo==enum.TableType.SOLICITA_BAJA:
+            clave=[state.valores_solicita_baja[int(ui_MW.baja_fil_in)][0]]
+        elif tipo==enum.TableType.ANTIGUAS_BAJAS:
+            clave=[state.valores_antiguas_bajas[int(ui_MW.baja_fil_in)][0]]
+    except:
+        popups.showError("Fila invalida")
+        return
     
     ret=con.transactionDeleteRow(tipo, clave)
     if ret[0]:
         ui_MW.dibujaTabla(tipo)
     else:
-        if ret[1] == Enum.DeleteExitCode.NO_CONECTION:
+        if ret[1] == enum.DeleteExitCode.NO_CONECTION:
             showDisconnect()
         else:
             popups.showError(ret[2])
