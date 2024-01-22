@@ -8,6 +8,7 @@ import Bridge.controlador as con
 import Bridge.state as state
 import Bridge.enums as enum
 import GUI.popups as popups
+from datetime import datetime
 
 ui_MW : Ui_MainWindow
 app = QApplication(sys.argv)
@@ -95,7 +96,10 @@ def dibujaTabla(tipo_tabla : TableType):
     
     for r, row in enumerate(data):
         for i, val in enumerate(row):
-            table.setItem(r, i, QTableWidgetItem(val))
+            text : str = str(val)
+            if type(val) is datetime:
+                text = val.strftime("%d/%m/%Y")
+            table.setItem(r, i, QTableWidgetItem(text))
 
 def dibujaTodasLasTablas():
     dibujaTabla(TableType.USUARIO)
