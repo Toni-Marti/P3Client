@@ -885,7 +885,7 @@ p, li { white-space: pre-wrap; }
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="sol_fila_in">
+                 <widget class="QLineEdit" name="sol_fil_in">
                   <property name="maximumSize">
                    <size>
                     <width>150</width>
@@ -1119,7 +1119,7 @@ p, li { white-space: pre-wrap; }
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="hit_fila_in">
+                 <widget class="QLineEdit" name="hist_fila_in">
                   <property name="maximumSize">
                    <size>
                     <width>150</width>

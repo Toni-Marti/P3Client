@@ -58,10 +58,19 @@ def deleteRow(tipo : enum.TableType):
             clave=[state.valores_usuario[int(ui_MW.usu_fil_in.text())-1][0]]
         elif tipo==enum.TableType.BAJA:
             clave=[state.valores_baja[int(ui_MW.baja_fil_in.text())-1][0]]
-        elif tipo==enum.TableType.SOLICITA_BAJA:
-            clave=[state.valores_solicita_baja[int(ui_MW.baja_fil_in.text())-1][0]]
-        elif tipo==enum.TableType.ANTIGUAS_BAJAS:
-            clave=[state.valores_antiguas_bajas[int(ui_MW.baja_fil_in.text())-1][0]]
+        elif tipo==enum.TableType.SOLICITA_BAJA or tipo==enum.TableType.ANTIGUAS_BAJAS:
+            tabla : list[list]
+            fila : int
+            if tipo==enum.TableType.SOLICITA_BAJA:
+                tabla = state.valores_solicita_baja
+                fila = int(ui_MW.sol_fil_in.text())-1
+            elif tipo==enum.TableType.ANTIGUAS_BAJAS:
+                tabla = state.valores_antiguas_bajas
+                fila = int(ui_MW.hist_fin_in.text())-1
+            
+            
+            fila = tabla[fila-1]
+            clave = [fila[0], fila[1], fila[2]]
     except:
         popups.showError("Fila invalida")
         return

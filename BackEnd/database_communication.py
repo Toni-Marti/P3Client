@@ -85,7 +85,7 @@ def _execute(command : str) -> bool:
         cursor.execute(command)
     except:
         print("Error executing:")
-        print(cursor.statement)
+        print(command)
         return False
     else:
         return True
@@ -112,10 +112,14 @@ def deleteRow(table_type : TableType, clave : list) -> bool:
         return _execute("DELETE FROM " + tab_usuario + " WHERE " + dni + "='" + clave[0] + "'")
     elif table_type == TableType.BAJA:
         return _execute("DELETE FROM " + tab_baja + " WHERE "+ motivo + "='" + clave[0] + "'")
-    elif table_type == TableType.SOLICITA_BAJA:
-        return _execute("DELETE FROM " + tab_solbaja + " WHERE " + dni + "=" + clave)
-    elif table_type == TableType.ANTIGUAS_BAJAS:
-        return _execute("DELETE FROM " + tab_antiguasbajas + " WHERE " + dni + "=" + clave)
+    elif table_type == TableType.SOLICITA_BAJA or table_type == TableType.ANTIGUAS_BAJAS:
+        tabla : str
+        if table_type == TableType.SOLICITA_BAJA:
+            tabla = tab_solbaja
+        elif table_type == TableType.ANTIGUAS_BAJAS:
+            tabla = tab_antiguasbajas
+        
+        return _execute("DELETE FROM " + tabla + " WHERE " + dni + "='" + clave[0] + "' AND " + f_ini + "=to_date('" + clave[1].strftime("%d/%m/%Y") + "', 'dd/mm/yyyy') AND " + f_fin + "=to_date('" + clave[2].strftime("%d/%m/%Y") + "', 'dd/mm/yyyy')")
     
 
 
