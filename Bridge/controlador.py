@@ -2,6 +2,7 @@
 from Bridge.enums import *
 import Bridge.state as state
 import BackEnd.database_communication as db_com
+import datetime
 
 
 # █████ █   █ █████ █████ ████  █   █  ███  █    
@@ -123,7 +124,7 @@ def deleteRow(table_type : TableType, clave : str) -> list:
             db_com.fetchTable(TableType.ANTIGUAS_BAJAS)
         return [True,[DeleteExitCode.SUCCES], "Se ha borrado la fila correctamente"]
     else:
-        return [False,[DeleteExitCode.UNKNOWN], "Error al borrar la fila"]
+        return [False,[DeleteExitCode.UNKNOWN], "Error al borrar la fila"]       
         
 def transactionDeleteRow(table_type : TableType, clave : str) -> bool:
     ret = deleteRow(table_type, clave)
@@ -132,7 +133,7 @@ def transactionDeleteRow(table_type : TableType, clave : str) -> bool:
     return ret
 
 def commit() -> bool:
-    upadteConnectionState()
+    upadteConnectionState() 
     if not state.hay_conexion_con_bd:
         return False
 
@@ -155,6 +156,18 @@ def rollBack() -> bool:
     db_com.rollback()
     db_com.fetchAll()
     return True
+    
+def updateExpiredBajas(): 
+    upadteConnectionState()
+    if not state.hay_conexion_con_bd:
+        return [False, [CaFExitCode.NO_CONECTION], "No hay conexion con la base de datos."]
+    
+    for row in state.valores_solicita_baja:
+        if row[2] < datetime.date.today():
+            deleteRow(TableType.SOLICITA_BAJA, [row[0], row[1], row[2]])
+    
+    commit()
+     
 
 def connectAndFetch(user : str, passwd : str) -> list:
     db_com.connect(user, passwd)
@@ -163,6 +176,8 @@ def connectAndFetch(user : str, passwd : str) -> list:
         return [False, [CaFExitCode.NO_CONNECTION], "No se ha podido conectar con la base de datos"]
     
     db_com.fetchAll()
+    
+    updateExpiredBajas()
     
     return [True, [CaFExitCode.SUCCES], "Se ha conectado con la base de datos y actualizado las tablas."]
 
