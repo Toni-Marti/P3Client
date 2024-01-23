@@ -119,6 +119,8 @@ def deleteRow(table_type : TableType, clave : str) -> list:
         return [False,[DeleteExitCode.REFERENCES_NOT_DELETED], "Valor referenciado en otra tabla"]
     if db_com.deleteRow(table_type, clave):
         db_com.fetchTable(table_type)
+        if table_type == TableType.SOLICITA_BAJA:
+            db_com.fetchTable(TableType.ANTIGUAS_BAJAS)
         return [True,[DeleteExitCode.SUCCES], "Se ha borrado la fila correctamente"]
     else:
         return [False,[DeleteExitCode.UNKNOWN], "Error al borrar la fila"]
