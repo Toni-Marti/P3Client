@@ -163,7 +163,7 @@ def updateExpiredBajas():
         return [False, [CaFExitCode.NO_CONECTION], "No hay conexion con la base de datos."]
     
     for row in state.valores_solicita_baja:
-        if row[2] < datetime.date.today():
+        if row[2] < datetime.datetime.combine(datetime.date.today(), datetime.datetime.min.time()):
             deleteRow(TableType.SOLICITA_BAJA, [row[0], row[1], row[2]])
     
     commit()
